@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>MappingJsonFactory.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/* Jackson JSON-processor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright (c) 2007- Tatu Saloranta, tatu.saloranta@iki.fi</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the License specified in file LICENSE, included with</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the source code and binary code bundles.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.fasterxml.jackson.databind;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.IOException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.fasterxml.jackson.core.*;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.fasterxml.jackson.core.format.InputAccessor;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.fasterxml.jackson.core.format.MatchStrength;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Sub-class of {@link JsonFactory} that will create a proper</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * {@link ObjectCodec} to allow seam-less conversions between</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * JSON content and Java objects (POJOs).</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * The only addition to regular {@link JsonFactory} currently</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * is that {@link ObjectMapper} is constructed and passed as</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the codec to use.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class MappingJsonFactory</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    extends JsonFactory</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>{</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    // generated for Jackson 2.1.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static final long serialVersionUID = -6744103724013275513L;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public MappingJsonFactory()</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        this(null);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public MappingJsonFactory(ObjectMapper mapper)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        super(mapper);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_45'/>
+45
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_45'>1</a>
+<span>
+
+1. &#60;init&#62; : negated conditional &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (mapper == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            setCodec(new ObjectMapper(this));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * We&#39;ll override the method to return more specific type; co-variance</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * helps here</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_55'/>
+55
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_55'>1</a>
+<span>
+
+1. getCodec : replaced return value with null for com/fasterxml/jackson/databind/MappingJsonFactory::getCodec &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>    public final ObjectMapper getCodec() { return (ObjectMapper) _objectCodec; }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    // @since 2.1</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public JsonFactory copy()</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_61'/>
+61
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_61'>1</a>
+<span>
+
+1. copy : removed call to com/fasterxml/jackson/databind/MappingJsonFactory::_checkInvalidCopy &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        _checkInvalidCopy(MappingJsonFactory.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // note: as with base class, must NOT copy mapper reference</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_63'/>
+63
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_63'>1</a>
+<span>
+
+1. copy : replaced return value with null for com/fasterxml/jackson/databind/MappingJsonFactory::copy &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return new MappingJsonFactory(null);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**********************************************************</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /* Format detection functionality (since 1.8)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**********************************************************</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Sub-classes need to override this method (as of 1.8)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String getFormatName()</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        /* since non-JSON factories typically should not extend this class,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>         * let&#39;s just always return JSON as name.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>         */</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_81'/>
+81
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_81'>1</a>
+<span>
+
+1. getFormatName : replaced return value with &#34;&#34; for com/fasterxml/jackson/databind/MappingJsonFactory::getFormatName &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return FORMAT_NAME_JSON;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Sub-classes need to override this method (as of 1.8)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public MatchStrength hasFormat(InputAccessor acc) throws IOException</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_90'/>
+90
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_90'>1</a>
+<span>
+
+1. hasFormat : negated conditional &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        if (getClass() == MappingJsonFactory.class) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_91'/>
+91
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_91'>1</a>
+<span>
+
+1. hasFormat : replaced return value with null for com/fasterxml/jackson/databind/MappingJsonFactory::hasFormat &rarr; NO_COVERAGE<br/>
+
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>            return hasJSONFormat(acc);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_93'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@63b3d59b_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@63b3d59b_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_45'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.fasterxml.jackson.databind.MappingJsonFactory,-method=<init>,-methodDesc=(Lcom/fasterxml/jackson/databind/ObjectMapper;)V],-indexes=[9],-mutator=org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.fasterxml.jackson.databind.MappingJsonFactory,-method=<init>,-methodDesc=(Lcom/fasterxml/jackson/databind/ObjectMapper;)V],-indexes=[9],-mutator=org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.fasterxml.jackson.databind.MappingJsonFactory,-method=<init>,-methodDesc=(Lcom/fasterxml/jackson/databind/ObjectMapper;)V],-indexes=[9],-mutator=org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testFromEmptyString348(com.fasterxml.jackson.databind.deser.TestJdkTypes)</li> <li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testFromEmptyString347(com.fasterxml.jackson.databind.deser.TestJdkTypes)</li> <li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testPropertyRemoval312(com.fasterxml.jackson.databind.ser.TestBeanSerializer)</li> <li>com.fasterxml.jackson.databind.node.TestTreeMapperDeserializer.testEndArray204(com.fasterxml.jackson.databind.node.TestTreeMapperDeserializer)</li> <li>com.fasterxml.jackson.databind.node.TestObjectNode.testBasics60(com.fasterxml.jackson.databind.node.TestObjectNode)</li> <li>com.fasterxml.jackson.core.format.TestJsonFormatDetection.testSimpleValidObject38(com.fasterxml.jackson.core.format.TestJsonFormatDetection)</li> <li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testMergeWithRename234(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector)</li> <li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testMergeWithRename230(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector)</li> <li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testPartialIgnore236(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector)</li> <li>com.fasterxml.jackson.databind.deser.TestArrayDeserialization.testLongArray300(com.fasterxml.jackson.databind.deser.TestArrayDeserialization)</li> <li>com.fasterxml.jackson.databind.deser.TestAnyProperties.testIntArray299(com.fasterxml.jackson.databind.deser.TestAnyProperties)</li> <li>com.fasterxml.jackson.databind.deser.TestGenericNumber.testBigIntAsNumber320(com.fasterxml.jackson.databind.deser.TestGenericNumber)</li> <li>com.fasterxml.jackson.databind.deser.TestAnyProperties.testFloatArray135(com.fasterxml.jackson.databind.deser.TestAnyProperties)</li> <li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testJackson744233(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector)</li> <li>com.fasterxml.jackson.databind.node.TestNumberNodes.testLong307(com.fasterxml.jackson.databind.node.TestNumberNodes)</li> <li>com.fasterxml.jackson.databind.node.TestNumberNodes.testInt208(com.fasterxml.jackson.databind.node.TestNumberNodes)</li> <li>com.fasterxml.jackson.databind.convert.TestUpdateValue.testHasNextWithEndArrayManagedParser250(com.fasterxml.jackson.databind.convert.TestUpdateValue)</li> <li>com.fasterxml.jackson.databind.ext.TestCoreXMLTypes.testDurationDeser340(com.fasterxml.jackson.databind.ext.TestCoreXMLTypes)</li> <li>com.fasterxml.jackson.databind.convert.TestUpdateValue.testHasNextWithEndArrayManagedParser249(com.fasterxml.jackson.databind.convert.TestUpdateValue)</li> <li>com.fasterxml.jackson.databind.node.TestFindMethods.testMatchingSingle160(com.fasterxml.jackson.databind.node.TestFindMethods)</li> <li>com.fasterxml.jackson.databind.ext.TestCoreXMLTypes.testCalendarDeser342(com.fasterxml.jackson.databind.ext.TestCoreXMLTypes)</li> <li>com.fasterxml.jackson.databind.node.TestTreeTraversingParser.testNested264(com.fasterxml.jackson.databind.node.TestTreeTraversingParser)</li> <li>com.fasterxml.jackson.databind.deser.TestSimpleTypes.testURL191(com.fasterxml.jackson.databind.deser.TestSimpleTypes)</li> <li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testDateNumeric159(com.fasterxml.jackson.databind.ser.TestDateSerialization)</li> <li>com.fasterxml.jackson.databind.deser.TestSimpleTypes.testSimpleURL194(com.fasterxml.jackson.databind.deser.TestSimpleTypes)</li> <li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testCharset192(com.fasterxml.jackson.databind.deser.TestJdkTypes)</li> <li>com.fasterxml.jackson.databind.ser.TestEnumSerialization.testToStringEnums268(com.fasterxml.jackson.databind.ser.TestEnumSerialization)</li> <li>com.fasterxml.jackson.databind.node.TestFindMethods.testMatchingMultiple61(com.fasterxml.jackson.databind.node.TestFindMethods)</li> <li>com.fasterxml.jackson.databind.deser.TestAnyProperties.testFloat144(com.fasterxml.jackson.databind.deser.TestAnyProperties)</li> <li>com.fasterxml.jackson.databind.convert.TestArrayConversions.testLongArrayToX337(com.fasterxml.jackson.databind.convert.TestArrayConversions)</li> <li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testWithTimeZoneOverride190(com.fasterxml.jackson.databind.ser.TestDateSerialization)</li> <li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testTimeZoneOverride245(com.fasterxml.jackson.databind.ser.TestDateSerialization)</li> <li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testDateUsingObjectWriter189(com.fasterxml.jackson.databind.ser.TestDateSerialization)</li> <li>com.fasterxml.jackson.databind.module.TestSimpleModule.testSimpleEnumSerializer138(com.fasterxml.jackson.databind.module.TestSimpleModule)</li> <li>com.fasterxml.jackson.databind.deser.TestMapDeserialization.testDatesWithEmptyStrings324(com.fasterxml.jackson.databind.deser.TestMapDeserialization)</li> <li>com.fasterxml.jackson.databind.ser.TestEnumSerialization.testAsIndex296(com.fasterxml.jackson.databind.ser.TestEnumSerialization)</li> <li>com.fasterxml.jackson.databind.creators.TestValueInstantiator.testCustomBeanInstantiator172(com.fasterxml.jackson.databind.creators.TestValueInstantiator)</li> <li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testModifyEnumSerializer228(com.fasterxml.jackson.databind.ser.TestBeanSerializer)</li> <li>com.fasterxml.jackson.databind.deser.TestValueAnnotations.testOverrideKeyClassInvalid291(com.fasterxml.jackson.databind.deser.TestValueAnnotations)</li> <li>com.fasterxml.jackson.databind.ser.TestFiltering.testDefaultFilter210(com.fasterxml.jackson.databind.ser.TestFiltering)</li> <li>com.fasterxml.jackson.databind.ser.TestFiltering.testMissingFilter107(com.fasterxml.jackson.databind.ser.TestFiltering)</li> <li>com.fasterxml.jackson.databind.ser.TestFiltering.testMultipleFilters106(com.fasterxml.jackson.databind.ser.TestFiltering)</li> <li>com.fasterxml.jackson.databind.TestNamingStrategy.testSimpleGetters238(com.fasterxml.jackson.databind.TestNamingStrategy)</li> <li>com.fasterxml.jackson.databind.ser.TestFiltering.testAll105(com.fasterxml.jackson.databind.ser.TestFiltering)</li> <li>com.fasterxml.jackson.databind.deser.TestEnumDeserialization.testMapError38(com.fasterxml.jackson.databind.deser.TestEnumDeserialization)</li> <li>com.fasterxml.jackson.databind.introspect.TestJacksonAnnotationIntrospector.testEnumHandling1(com.fasterxml.jackson.databind.introspect.TestJacksonAnnotationIntrospector)</li> <li>com.fasterxml.jackson.databind.deser.TestBeanDeserializer.testModifyArrayDeserializer286(com.fasterxml.jackson.databind.deser.TestBeanDeserializer)</li> <li>com.fasterxml.jackson.databind.struct.TestUnwrapped.testDeepUnwrappingSerialize100(com.fasterxml.jackson.databind.struct.TestUnwrapped)</li> <li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testOrderByKey229(com.fasterxml.jackson.databind.ser.TestBeanSerializer)</li> <li>com.fasterxml.jackson.databind.struct.TestObjectIdSerialization.testCustomPropertyForClass19(com.fasterxml.jackson.databind.struct.TestObjectIdSerialization)</li> <li>com.fasterxml.jackson.databind.struct.TestObjectIdSerialization.testAlwaysIdForTree226(com.fasterxml.jackson.databind.struct.TestObjectIdSerialization)</li> <li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testPropertyRemoval89(com.fasterxml.jackson.databind.ser.TestBeanSerializer)</li> <li>com.fasterxml.jackson.databind.creators.TestValueInstantiator.testCustomMapInstantiator285(com.fasterxml.jackson.databind.creators.TestValueInstantiator)</li> <li>com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization.testUnknownHandlingIgnoreWithHandler34(com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization)</li> <li>com.fasterxml.jackson.databind.contextual.TestContextualDeserialization.testSimple331(com.fasterxml.jackson.databind.contextual.TestContextualDeserialization)</li> <li>com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization.testUnknownHandlingDefault36(com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization)</li> <li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testJackson703231(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector)</li> <li>com.fasterxml.jackson.databind.deser.TestSimpleTypes.testDoublePrimitiveNonNumeric184(com.fasterxml.jackson.databind.deser.TestSimpleTypes)</li> <li>com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix.testSimpleUnwrappedDeserialize297(com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix)</li> <li>com.fasterxml.jackson.databind.views.TestViewDeserialization.testSimple198(com.fasterxml.jackson.databind.views.TestViewDeserialization)</li> <li>com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix.testDeepUnwrapping298(com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix)</li> <li>com.fasterxml.jackson.databind.deser.TestDateDeserialization.testCustomCalendarWithAnnotation259(com.fasterxml.jackson.databind.deser.TestDateDeserialization)</li> <li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testEmptyStringForWrappers69(com.fasterxml.jackson.databind.deser.TestJdkTypes)</li> <li>com.fasterxml.jackson.databind.convert.TestArrayConversions.testOverflows150(com.fasterxml.jackson.databind.convert.TestArrayConversions)</li> <li>com.fasterxml.jackson.databind.jsontype.TestDefaultForLists.testDateScalars257(com.fasterxml.jackson.databind.jsontype.TestDefaultForLists)</li> <li>com.fasterxml.jackson.databind.jsontype.TestEnumTyping.testTagList126(com.fasterxml.jackson.databind.jsontype.TestEnumTyping)</li> <li>com.fasterxml.jackson.databind.jsontype.TestExternalId.testIssue831117(com.fasterxml.jackson.databind.jsontype.TestExternalId)</li> <li>com.fasterxml.jackson.databind.deser.TestAnnotationUsing.testListContentUsing247(com.fasterxml.jackson.databind.deser.TestAnnotationUsing)</li> <li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseUnchangedNames(com.fasterxml.jackson.databind.TestStdNamingStrategies)</li> <li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseOtherNonStandardNamesTranslations(com.fasterxml.jackson.databind.TestStdNamingStrategies)</li> <li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseAcronymsTranslations(com.fasterxml.jackson.databind.TestStdNamingStrategies)</li> <li>com.fasterxml.jackson.databind.deser.TestEnumDeserialization.testAllowUnknownEnumValuesAsMapKeysReadAsNull322(com.fasterxml.jackson.databind.deser.TestEnumDeserialization)</li> <li>com.fasterxml.jackson.databind.TestNamingStrategy.testSimpleFields188(com.fasterxml.jackson.databind.TestNamingStrategy)</li> <li>com.fasterxml.jackson.databind.filter.TestSimpleSerializationIgnore.testIgnoreOver313(com.fasterxml.jackson.databind.filter.TestSimpleSerializationIgnore)</li> <li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseTranslations(com.fasterxml.jackson.databind.TestStdNamingStrategies)</li> <li>com.fasterxml.jackson.databind.module.TestSimpleModule.testMixIns139(com.fasterxml.jackson.databind.module.TestSimpleModule)</li> <li>com.fasterxml.jackson.databind.creators.TestCreators.testSimple123(com.fasterxml.jackson.databind.creators.TestCreators)</li> <li>com.fasterxml.jackson.databind.jsontype.TestExternalId.testWithNaturalScalar118118(com.fasterxml.jackson.databind.jsontype.TestExternalId)</li> <li>com.fasterxml.jackson.databind.jsontype.TestExternalId.testExternalTypeWithCreator116(com.fasterxml.jackson.databind.jsontype.TestExternalId)</li> <li>com.fasterxml.jackson.databind.struct.TestObjectIdDeserialization.testSimpleUUIDForClassRoundTrip197(com.fasterxml.jackson.databind.struct.TestObjectIdDeserialization)</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@63b3d59b_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_55'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getCodec<br/><b>Killed by : </b>none</span></span> replaced return value with null for com/fasterxml/jackson/databind/MappingJsonFactory::getCodec &rarr; NO_COVERAGE</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@63b3d59b_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_61'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>copy<br/><b>Killed by : </b>none</span></span> removed call to com/fasterxml/jackson/databind/MappingJsonFactory::_checkInvalidCopy &rarr; NO_COVERAGE</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@63b3d59b_63'>63</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_63'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>copy<br/><b>Killed by : </b>none</span></span> replaced return value with null for com/fasterxml/jackson/databind/MappingJsonFactory::copy &rarr; NO_COVERAGE</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@63b3d59b_81'>81</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_81'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getFormatName<br/><b>Killed by : </b>none</span></span> replaced return value with &#34;&#34; for com/fasterxml/jackson/databind/MappingJsonFactory::getFormatName &rarr; NO_COVERAGE</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@63b3d59b_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_90'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasFormat<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; NO_COVERAGE</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@63b3d59b_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@63b3d59b_91'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasFormat<br/><b>Killed by : </b>none</span></span> replaced return value with null for com/fasterxml/jackson/databind/MappingJsonFactory::hasFormat &rarr; NO_COVERAGE</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testFromEmptyString348(com.fasterxml.jackson.databind.deser.TestJdkTypes) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testFromEmptyString347(com.fasterxml.jackson.databind.deser.TestJdkTypes) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testPropertyRemoval312(com.fasterxml.jackson.databind.ser.TestBeanSerializer) (0 ms)</li><li>com.fasterxml.jackson.databind.node.TestTreeMapperDeserializer.testEndArray204(com.fasterxml.jackson.databind.node.TestTreeMapperDeserializer) (0 ms)</li><li>com.fasterxml.jackson.databind.node.TestObjectNode.testBasics60(com.fasterxml.jackson.databind.node.TestObjectNode) (0 ms)</li><li>com.fasterxml.jackson.core.format.TestJsonFormatDetection.testSimpleValidObject38(com.fasterxml.jackson.core.format.TestJsonFormatDetection) (5 ms)</li><li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testMergeWithRename234(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector) (0 ms)</li><li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testMergeWithRename230(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector) (0 ms)</li><li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testPartialIgnore236(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestArrayDeserialization.testLongArray300(com.fasterxml.jackson.databind.deser.TestArrayDeserialization) (10 ms)</li><li>com.fasterxml.jackson.databind.deser.TestAnyProperties.testIntArray299(com.fasterxml.jackson.databind.deser.TestAnyProperties) (13 ms)</li><li>com.fasterxml.jackson.databind.deser.TestGenericNumber.testBigIntAsNumber320(com.fasterxml.jackson.databind.deser.TestGenericNumber) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestAnyProperties.testFloatArray135(com.fasterxml.jackson.databind.deser.TestAnyProperties) (14 ms)</li><li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testJackson744233(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector) (0 ms)</li><li>com.fasterxml.jackson.databind.node.TestNumberNodes.testLong307(com.fasterxml.jackson.databind.node.TestNumberNodes) (0 ms)</li><li>com.fasterxml.jackson.databind.node.TestNumberNodes.testInt208(com.fasterxml.jackson.databind.node.TestNumberNodes) (0 ms)</li><li>com.fasterxml.jackson.databind.convert.TestUpdateValue.testHasNextWithEndArrayManagedParser250(com.fasterxml.jackson.databind.convert.TestUpdateValue) (0 ms)</li><li>com.fasterxml.jackson.databind.ext.TestCoreXMLTypes.testDurationDeser340(com.fasterxml.jackson.databind.ext.TestCoreXMLTypes) (1 ms)</li><li>com.fasterxml.jackson.databind.convert.TestUpdateValue.testHasNextWithEndArrayManagedParser249(com.fasterxml.jackson.databind.convert.TestUpdateValue) (0 ms)</li><li>com.fasterxml.jackson.databind.node.TestFindMethods.testMatchingSingle160(com.fasterxml.jackson.databind.node.TestFindMethods) (0 ms)</li><li>com.fasterxml.jackson.databind.ext.TestCoreXMLTypes.testCalendarDeser342(com.fasterxml.jackson.databind.ext.TestCoreXMLTypes) (2 ms)</li><li>com.fasterxml.jackson.databind.node.TestTreeTraversingParser.testNested264(com.fasterxml.jackson.databind.node.TestTreeTraversingParser) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestSimpleTypes.testURL191(com.fasterxml.jackson.databind.deser.TestSimpleTypes) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testDateNumeric159(com.fasterxml.jackson.databind.ser.TestDateSerialization) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestSimpleTypes.testSimpleURL194(com.fasterxml.jackson.databind.deser.TestSimpleTypes) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testCharset192(com.fasterxml.jackson.databind.deser.TestJdkTypes) (1 ms)</li><li>com.fasterxml.jackson.databind.ser.TestEnumSerialization.testToStringEnums268(com.fasterxml.jackson.databind.ser.TestEnumSerialization) (0 ms)</li><li>com.fasterxml.jackson.databind.node.TestFindMethods.testMatchingMultiple61(com.fasterxml.jackson.databind.node.TestFindMethods) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestAnyProperties.testFloat144(com.fasterxml.jackson.databind.deser.TestAnyProperties) (0 ms)</li><li>com.fasterxml.jackson.databind.convert.TestArrayConversions.testLongArrayToX337(com.fasterxml.jackson.databind.convert.TestArrayConversions) (1 ms)</li><li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testWithTimeZoneOverride190(com.fasterxml.jackson.databind.ser.TestDateSerialization) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testTimeZoneOverride245(com.fasterxml.jackson.databind.ser.TestDateSerialization) (2 ms)</li><li>com.fasterxml.jackson.databind.ser.TestDateSerialization.testDateUsingObjectWriter189(com.fasterxml.jackson.databind.ser.TestDateSerialization) (1 ms)</li><li>com.fasterxml.jackson.databind.module.TestSimpleModule.testSimpleEnumSerializer138(com.fasterxml.jackson.databind.module.TestSimpleModule) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestMapDeserialization.testDatesWithEmptyStrings324(com.fasterxml.jackson.databind.deser.TestMapDeserialization) (2 ms)</li><li>com.fasterxml.jackson.databind.ser.TestEnumSerialization.testAsIndex296(com.fasterxml.jackson.databind.ser.TestEnumSerialization) (0 ms)</li><li>com.fasterxml.jackson.databind.creators.TestValueInstantiator.testCustomBeanInstantiator172(com.fasterxml.jackson.databind.creators.TestValueInstantiator) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testModifyEnumSerializer228(com.fasterxml.jackson.databind.ser.TestBeanSerializer) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestValueAnnotations.testOverrideKeyClassInvalid291(com.fasterxml.jackson.databind.deser.TestValueAnnotations) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestFiltering.testDefaultFilter210(com.fasterxml.jackson.databind.ser.TestFiltering) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestFiltering.testMissingFilter107(com.fasterxml.jackson.databind.ser.TestFiltering) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestFiltering.testMultipleFilters106(com.fasterxml.jackson.databind.ser.TestFiltering) (0 ms)</li><li>com.fasterxml.jackson.databind.TestNamingStrategy.testSimpleGetters238(com.fasterxml.jackson.databind.TestNamingStrategy) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestFiltering.testAll105(com.fasterxml.jackson.databind.ser.TestFiltering) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestEnumDeserialization.testMapError38(com.fasterxml.jackson.databind.deser.TestEnumDeserialization) (0 ms)</li><li>com.fasterxml.jackson.databind.introspect.TestJacksonAnnotationIntrospector.testEnumHandling1(com.fasterxml.jackson.databind.introspect.TestJacksonAnnotationIntrospector) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestBeanDeserializer.testModifyArrayDeserializer286(com.fasterxml.jackson.databind.deser.TestBeanDeserializer) (0 ms)</li><li>com.fasterxml.jackson.databind.struct.TestUnwrapped.testDeepUnwrappingSerialize100(com.fasterxml.jackson.databind.struct.TestUnwrapped) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testOrderByKey229(com.fasterxml.jackson.databind.ser.TestBeanSerializer) (1 ms)</li><li>com.fasterxml.jackson.databind.struct.TestObjectIdSerialization.testCustomPropertyForClass19(com.fasterxml.jackson.databind.struct.TestObjectIdSerialization) (0 ms)</li><li>com.fasterxml.jackson.databind.struct.TestObjectIdSerialization.testAlwaysIdForTree226(com.fasterxml.jackson.databind.struct.TestObjectIdSerialization) (0 ms)</li><li>com.fasterxml.jackson.databind.ser.TestBeanSerializer.testPropertyRemoval89(com.fasterxml.jackson.databind.ser.TestBeanSerializer) (0 ms)</li><li>com.fasterxml.jackson.databind.creators.TestValueInstantiator.testCustomMapInstantiator285(com.fasterxml.jackson.databind.creators.TestValueInstantiator) (0 ms)</li><li>com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization.testUnknownHandlingIgnoreWithHandler34(com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization) (0 ms)</li><li>com.fasterxml.jackson.databind.contextual.TestContextualDeserialization.testSimple331(com.fasterxml.jackson.databind.contextual.TestContextualDeserialization) (1 ms)</li><li>com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization.testUnknownHandlingDefault36(com.fasterxml.jackson.databind.filter.TestUnknownPropertyDeserialization) (0 ms)</li><li>com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector.testJackson703231(com.fasterxml.jackson.databind.introspect.TestPOJOPropertiesCollector) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestSimpleTypes.testDoublePrimitiveNonNumeric184(com.fasterxml.jackson.databind.deser.TestSimpleTypes) (0 ms)</li><li>com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix.testSimpleUnwrappedDeserialize297(com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix) (0 ms)</li><li>com.fasterxml.jackson.databind.views.TestViewDeserialization.testSimple198(com.fasterxml.jackson.databind.views.TestViewDeserialization) (0 ms)</li><li>com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix.testDeepUnwrapping298(com.fasterxml.jackson.databind.struct.TestUnwrappedWithPrefix) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestDateDeserialization.testCustomCalendarWithAnnotation259(com.fasterxml.jackson.databind.deser.TestDateDeserialization) (1 ms)</li><li>com.fasterxml.jackson.databind.deser.TestJdkTypes.testEmptyStringForWrappers69(com.fasterxml.jackson.databind.deser.TestJdkTypes) (2 ms)</li><li>com.fasterxml.jackson.databind.convert.TestArrayConversions.testOverflows150(com.fasterxml.jackson.databind.convert.TestArrayConversions) (4 ms)</li><li>com.fasterxml.jackson.databind.jsontype.TestDefaultForLists.testDateScalars257(com.fasterxml.jackson.databind.jsontype.TestDefaultForLists) (1 ms)</li><li>com.fasterxml.jackson.databind.jsontype.TestEnumTyping.testTagList126(com.fasterxml.jackson.databind.jsontype.TestEnumTyping) (0 ms)</li><li>com.fasterxml.jackson.databind.jsontype.TestExternalId.testIssue831117(com.fasterxml.jackson.databind.jsontype.TestExternalId) (0 ms)</li><li>com.fasterxml.jackson.databind.deser.TestAnnotationUsing.testListContentUsing247(com.fasterxml.jackson.databind.deser.TestAnnotationUsing) (0 ms)</li><li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseUnchangedNames(com.fasterxml.jackson.databind.TestStdNamingStrategies) (1 ms)</li><li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseOtherNonStandardNamesTranslations(com.fasterxml.jackson.databind.TestStdNamingStrategies) (1 ms)</li><li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseAcronymsTranslations(com.fasterxml.jackson.databind.TestStdNamingStrategies) (1 ms)</li><li>com.fasterxml.jackson.databind.deser.TestEnumDeserialization.testAllowUnknownEnumValuesAsMapKeysReadAsNull322(com.fasterxml.jackson.databind.deser.TestEnumDeserialization) (1 ms)</li><li>com.fasterxml.jackson.databind.TestNamingStrategy.testSimpleFields188(com.fasterxml.jackson.databind.TestNamingStrategy) (2 ms)</li><li>com.fasterxml.jackson.databind.filter.TestSimpleSerializationIgnore.testIgnoreOver313(com.fasterxml.jackson.databind.filter.TestSimpleSerializationIgnore) (1 ms)</li><li>com.fasterxml.jackson.databind.TestStdNamingStrategies.testLowerCaseTranslations(com.fasterxml.jackson.databind.TestStdNamingStrategies) (1 ms)</li><li>com.fasterxml.jackson.databind.module.TestSimpleModule.testMixIns139(com.fasterxml.jackson.databind.module.TestSimpleModule) (0 ms)</li><li>com.fasterxml.jackson.databind.creators.TestCreators.testSimple123(com.fasterxml.jackson.databind.creators.TestCreators) (3 ms)</li><li>com.fasterxml.jackson.databind.jsontype.TestExternalId.testWithNaturalScalar118118(com.fasterxml.jackson.databind.jsontype.TestExternalId) (0 ms)</li><li>com.fasterxml.jackson.databind.jsontype.TestExternalId.testExternalTypeWithCreator116(com.fasterxml.jackson.databind.jsontype.TestExternalId) (1 ms)</li><li>com.fasterxml.jackson.databind.struct.TestObjectIdDeserialization.testSimpleUUIDForClassRoundTrip197(com.fasterxml.jackson.databind.struct.TestObjectIdDeserialization) (232 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.17.0
+
+</body>
+</html>

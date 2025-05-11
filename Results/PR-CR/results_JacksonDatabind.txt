@@ -1,0 +1,6 @@
+Project Name: JacksonDatabind
+Method: codet5
+Data Augmentation: sf-utg
+Total Generated Tests: 338
+Not Parsable Tests: 9
+Not Compilable Tests: 234

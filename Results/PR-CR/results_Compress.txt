@@ -1,0 +1,6 @@
+Project Name: Compress
+Method: codet5
+Data Augmentation: sf-utg
+Total Generated Tests: 33
+Not Parsable Tests: 3
+Not Compilable Tests: 16

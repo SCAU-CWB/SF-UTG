@@ -1,0 +1,6 @@
+Project Name: JacksonCore
+Method: codet5
+Data Augmentation: sf-utg
+Total Generated Tests: 55
+Not Parsable Tests: 4
+Not Compilable Tests: 26
